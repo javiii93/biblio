@@ -1,0 +1,74 @@
+Seleccionamos  nuestro proyecto y presionamos boton derecho del mouse y vamos a:
+New-> Other->Hibernate->Hibernate Configuration File(cfg.xml).
+Session: MySqlConexion
+Database:MySQL
+driver: com.mysql.jdbc.Driver
+connection: jdbc:mysql://localhost/biblio
+username: root
+finish
+Ahora sigue crear el xml Hibernate Console Configuration.
+name:ConfiguracionHb
+finish
+Por ultimo  falta crear el  Hibernate Reverse Engineering(reveng.xml)
+Importante!! se debe guardar en el mismo paquete que el cfg.xml este esta en src
+ asi que ahi guardaremos el reveng.xml, presionamos next y nos aparecera una ventana
+ si todo va bien aqui es donde diremos que tablas queremos mapear presionamos 
+refresh y so todo salio bien  se mostrara nuestra base de datos y sus tablas
+Seleccionamos ya sea una por una o todas las tablas y presionamos el boton include
+ y presionamos finish.
+Solo falta generar las clases  de nuestra base de datos Ejemplo, para lograr esto
+ debemos presionar un botón parecido al de Run –>Hibernate Code Generation 
+ Configurations (tiene una especie de candado)
+Pestaña Main:
+Console Configuration: ConfiguracionHB
+Output directory: debe ser el mismo  source folder que es “src”
+Package:modelos
+revenge.xml: nuestro archivo revenge.xml ya creado con anterioridad.
+En la pestaña exporters debemos indicar que archivos quiero que se generen :
+use java 5 syntax
+-domain code(.java)
+-hibernate xml mappings(.hbm.xml)
+-hibernate xml configutayioon(.cfg.xml)
+Una vez seleccionado daremos en Apply y posteriormente en Run.
+
+Para comprobar que hemos realizado  correctamente nos vamos a la perspectiva
+ de Hibernate y seleccionamos  nuestra configuracion en la pestaña hibernate  
+configurations y le damos click derecho en Database-> HQL Editor
+y pondremos un sencillo  codigo HQL de prueba . from Alumno
+
+public static void insertarDato() {
+		Session session = sessionFactoryUtil.getSessionFactory().openSession(); 
+		Transaction tx = session.beginTransaction();
+		Autor newAutor = new Autor();
+		newAutor.setNomautor("Manolito pies de plata");
+		session.save(newAutor);
+		tx.commit();
+		System.out.println("Autor insertado, "+newAutor.toString());
+		session.close();
+	}
+problema 1= quitar en atributo name de el hibernateconfiguration
+problema 2 añadir mas dependencias 
+<dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.0</version>
+</dependency>
+<dependency>
+  <groupId>com.sun.xml.bind</groupId>
+  <artifactId>jaxb-core</artifactId>
+  <version>2.2.11</version>
+</dependency>
+<dependency>
+  <groupId>com.sun.xml.bind</groupId>
+  <artifactId>jaxb-impl</artifactId>
+<version>2.3.2</version>
+</dependency>
+<dependency>
+  <groupId>javax.activation</groupId>
+  <artifactId>activation</artifactId>
+  <version>1.1.1</version>
+</dependency>
+</dependencies>:
+
+
+
